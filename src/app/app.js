@@ -87,6 +87,7 @@ function (angular, $, _, appLevelRequire) {
   // NOTE: The 'X-Requested-With' header has been removed in Angular 1.1.x
   app.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
+    $httpProvider.defaults.withCredentials = true;
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
     // If the backend (apollo) gives us a 401, redirect to the login page.
     $httpProvider.responseInterceptors.push(function() {
@@ -106,7 +107,7 @@ function (angular, $, _, appLevelRequire) {
                 goto += (hash ? hash : "");
                 goto += (query ? "?" + encodeURIComponent(query) : "");
                 goto = goto.replace(/#/g, '%23');  
-                window.location = goto;
+                //window.location = goto;
                 return;
               } else if (err.status === 404) {
                   console.log('http 404 encounter!');

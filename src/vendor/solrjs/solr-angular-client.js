@@ -65,9 +65,9 @@ angular.module('solrjs.service', [])
         if (DEBUG) { console.debug('solr-angular-client: url=',url,', path=',path,', isUpdate=',isUpdate); }
 
         if (isUpdate !== -1) {
-          config = { headers: {'Content-type':'application/json'} };
+          config = { withCredentials: true, headers: {'Content-type':'application/json'} };
         } else {
-          config = { headers: {'Content-type':'application/x-www-form-urlencoded'} };
+          config = { withCredentials: true, headers: {'Content-type':'application/x-www-form-urlencoded'} };
         }
 
         path = url + path;
@@ -76,7 +76,7 @@ angular.module('solrjs.service', [])
       },
       // This function is only use for Fusion Index Pipeline when deleting a saved dashboard.
       postDel: function (path, data, successcb, errorcb) {
-        var config = { headers: {'Content-type':'application/vnd.lucidworks-document'} };
+        var config = { withCredentials: true, headers: {'Content-type':'application/vnd.lucidworks-document'} };
         path = url + path;
         return promiseThen($http.post(path, data, config), successcb, errorcb);
       },
@@ -87,20 +87,21 @@ angular.module('solrjs.service', [])
       },
       // PUT is only used for saving a dashboard.
       put: function (path, data, successcb, errorcb) {
+        var config = { withCredentials: true };
         path = url + path;
-
         if (DEBUG) { console.debug('solr-angular-client: PUT path=',path,', data=',data); }
-
-        return promiseThen($http.put(path, data), successcb, errorcb);
+        return promiseThen($http.put(path, data, config), successcb, errorcb);
       },
       // DELETE is for deleting a saved dashboard.
       del: function (path, data, successcb, errorcb) {
+        var config = { withCredentials: true };
         path = url + path;
-        return promiseThen($http.delete(path, data), successcb, errorcb);
+        return promiseThen($http.delete(path, data, config), successcb, errorcb);
       },
       head: function (path, data, successcb, errorcb) {
+        var config = { withCredentials: true };
         path = url + path;
-        return $http.head(path, data)
+        return $http.head(path, data, config)
           .then(function (response) {
           (successcb || angular.noop)(response.headers());
           return response.headers();

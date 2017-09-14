@@ -71,7 +71,8 @@ function (angular, _, config, moment) {
         // And we're hard-coding the "default" search cluster ...that's the only one we'll get collections for, and it
         // is not yet configurable.
         url: collectionApi,
-        method: "GET"
+        method: "GET",
+        withCredentials: true
       }).error(function(data, status) {
         alertSrv.set('Error',"Could not retrieve collections from Solr (error status = "+status+")");
         console.debug('kbnIndex: error data = ',data);

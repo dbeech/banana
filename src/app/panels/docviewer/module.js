@@ -68,7 +68,11 @@ function (angular, app, kbn, _/*, $*/) {
       // Get the unique key (field) from the collection (or core) schema.
       // This field will be used for selecting the highlighting results.
       var solrUrl = dashboard.current.solr.server + dashboard.current.solr.core_name + '/schema/uniquekey?wt=json&omitHeader=true';
-      $http.get(solrUrl).then(function (resp) {
+      $http({
+        url: solrUrl,
+        method: "GET",
+        withCredentials: true  
+      }).then(function (resp) {
         $scope.panel.uniqueKey = resp.data.uniqueKey;
       });
     };
